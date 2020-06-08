@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Virus attack",
+"productVersion": "0.1",
+"dataUrl": "fcf8eaa5c6559c2426b61480ab0aacd3.unityweb",
+"wasmCodeUrl": "df2df17752d90e90c2289499a49c2343.unityweb",
+"wasmFrameworkUrl": "f617916809f32b33e6e59a592960fe50.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.3.0f6"
+}
