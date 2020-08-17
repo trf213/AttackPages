@@ -1285,6 +1285,8 @@ var ASM_CONSTS = [ (function() {
  }
  Module.deinitializers = [];
  if (typeof Module.onQuit == "function") Module.onQuit();
+}), (function() {
+ debugger;
 }) ];
 function _emscripten_asm_const_i(code) {
  return ASM_CONSTS[code]();
@@ -1299,7 +1301,7 @@ function _emscripten_asm_const_ii(code, a0) {
  return ASM_CONSTS[code](a0);
 }
 STATIC_BASE = GLOBAL_BASE;
-STATICTOP = STATIC_BASE + 2983168;
+STATICTOP = STATIC_BASE + 3013248;
 __ATINIT__.push({
  func: (function() {
   __GLOBAL__sub_I_AIScriptingClasses_cpp();
@@ -3229,7 +3231,7 @@ __ATINIT__.push({
   ___emscripten_environ_constructor();
  })
 });
-var STATIC_BUMP = 2983168;
+var STATIC_BUMP = 3013248;
 Module["STATIC_BASE"] = STATIC_BASE;
 Module["STATIC_BUMP"] = STATIC_BUMP;
 var tempDoublePtr = STATICTOP;
@@ -3547,6 +3549,9 @@ function _JS_SystemInfo_HasWebGL() {
 }
 function _JS_SystemInfo_IsMobile() {
  return Module.SystemInfo.mobile;
+}
+function ___assert_fail(condition, filename, line, func) {
+ abort("Assertion failed: " + Pointer_stringify(condition) + ", at: " + [ filename ? Pointer_stringify(filename) : "unknown filename", line, func ? Pointer_stringify(func) : "unknown function" ]);
 }
 function ___atomic_fetch_add_8(ptr, vall, valh, memmodel) {
  var l = HEAP32[ptr >> 2];
@@ -18619,6 +18624,7 @@ Module.asmLibraryArg = {
  "_JS_SystemInfo_HasWebGL": _JS_SystemInfo_HasWebGL,
  "_JS_SystemInfo_IsMobile": _JS_SystemInfo_IsMobile,
  "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv,
+ "___assert_fail": ___assert_fail,
  "___atomic_fetch_add_8": ___atomic_fetch_add_8,
  "___buildEnvironment": ___buildEnvironment,
  "___cxa_allocate_exception": ___cxa_allocate_exception,
