@@ -90,6 +90,13 @@ function SendMessage(gameObject, func, param) {
  if (param === undefined) Module.ccall("SendMessage", null, [ "string", "string" ], [ gameObject, func ]); else if (typeof param === "string") Module.ccall("SendMessageString", null, [ "string", "string", "string" ], [ gameObject, func, param ]); else if (typeof param === "number") Module.ccall("SendMessageFloat", null, [ "string", "string", "number" ], [ gameObject, func, param ]); else throw "" + param + " is does not have a type which is supported by SendMessage.";
 }
 Module["SendMessage"] = SendMessage;
+var ___cxa_throw = (function() {
+ var original___cxa_throw = ___cxa_throw;
+ return (function() {
+  console.log("Exception at: \n" + stackTrace());
+  original___cxa_throw();
+ });
+})();
 var moduleOverrides = {};
 var key;
 for (key in Module) {
@@ -1285,8 +1292,6 @@ var ASM_CONSTS = [ (function() {
  }
  Module.deinitializers = [];
  if (typeof Module.onQuit == "function") Module.onQuit();
-}), (function() {
- debugger;
 }) ];
 function _emscripten_asm_const_i(code) {
  return ASM_CONSTS[code]();
@@ -1301,7 +1306,7 @@ function _emscripten_asm_const_ii(code, a0) {
  return ASM_CONSTS[code](a0);
 }
 STATIC_BASE = GLOBAL_BASE;
-STATICTOP = STATIC_BASE + 3013248;
+STATICTOP = STATIC_BASE + 2983040;
 __ATINIT__.push({
  func: (function() {
   __GLOBAL__sub_I_AIScriptingClasses_cpp();
@@ -3231,7 +3236,7 @@ __ATINIT__.push({
   ___emscripten_environ_constructor();
  })
 });
-var STATIC_BUMP = 3013248;
+var STATIC_BUMP = 2983040;
 Module["STATIC_BASE"] = STATIC_BASE;
 Module["STATIC_BUMP"] = STATIC_BUMP;
 var tempDoublePtr = STATICTOP;
@@ -3550,9 +3555,6 @@ function _JS_SystemInfo_HasWebGL() {
 function _JS_SystemInfo_IsMobile() {
  return Module.SystemInfo.mobile;
 }
-function ___assert_fail(condition, filename, line, func) {
- abort("Assertion failed: " + Pointer_stringify(condition) + ", at: " + [ filename ? Pointer_stringify(filename) : "unknown filename", line, func ? Pointer_stringify(func) : "unknown function" ]);
-}
 function ___atomic_fetch_add_8(ptr, vall, valh, memmodel) {
  var l = HEAP32[ptr >> 2];
  var h = HEAP32[ptr + 4 >> 2];
@@ -3659,49 +3661,15 @@ function ___cxa_begin_catch(ptr) {
  EXCEPTIONS.addRef(EXCEPTIONS.deAdjust(ptr));
  return ptr;
 }
-function ___cxa_free_exception(ptr) {
- try {
-  return _free(ptr);
- } catch (e) {
-  err("exception during cxa_free_exception: " + e);
- }
-}
-function ___cxa_end_catch() {
- Module["setThrew"](0);
- var ptr = EXCEPTIONS.caught.pop();
- if (ptr) {
-  EXCEPTIONS.decRef(EXCEPTIONS.deAdjust(ptr));
-  EXCEPTIONS.last = 0;
- }
-}
-function ___cxa_find_matching_catch_2() {
- return ___cxa_find_matching_catch.apply(null, arguments);
-}
-function ___cxa_find_matching_catch_3() {
- return ___cxa_find_matching_catch.apply(null, arguments);
-}
-function ___cxa_find_matching_catch_4() {
- return ___cxa_find_matching_catch.apply(null, arguments);
-}
 function ___cxa_pure_virtual() {
  ABORT = true;
  throw "Pure virtual function called!";
-}
-function ___cxa_rethrow() {
- var ptr = EXCEPTIONS.caught.pop();
- ptr = EXCEPTIONS.deAdjust(ptr);
- if (!EXCEPTIONS.infos[ptr].rethrown) {
-  EXCEPTIONS.caught.push(ptr);
-  EXCEPTIONS.infos[ptr].rethrown = true;
- }
- EXCEPTIONS.last = ptr;
- throw ptr;
 }
 function ___resumeException(ptr) {
  if (!EXCEPTIONS.last) {
   EXCEPTIONS.last = ptr;
  }
- throw ptr;
+ throw ptr + " - Exception catching is disabled, this exception cannot be caught. Compile with -s DISABLE_EXCEPTION_CATCHING=0 or DISABLE_EXCEPTION_CATCHING=2 to catch.";
 }
 function ___cxa_find_matching_catch() {
  var thrown = EXCEPTIONS.last;
@@ -3744,7 +3712,7 @@ function ___cxa_throw(ptr, type, destructor) {
  } else {
   __ZSt18uncaught_exceptionv.uncaught_exception++;
  }
- throw ptr;
+ throw ptr + " - Exception catching is disabled, this exception cannot be caught. Compile with -s DISABLE_EXCEPTION_CATCHING=0 or DISABLE_EXCEPTION_CATCHING=2 to catch.";
 }
 function ___gxx_personality_v0() {}
 function ___lock() {}
@@ -13265,9 +13233,6 @@ function _llvm_cttz_i32(x) {
  x = x | 0;
  return (x ? 31 - (Math_clz32(x ^ x - 1) | 0) | 0 : 32) | 0;
 }
-function _llvm_eh_typeid_for(type) {
- return type;
-}
 function _llvm_exp2_f32(x) {
  return Math.pow(2, x);
 }
@@ -14649,11 +14614,6 @@ function nullFunc_ijji(x) {
  err("Build with ASSERTIONS=2 for more info.");
  abort(x);
 }
-function nullFunc_j(x) {
- err("Invalid function pointer called with signature 'j'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this)");
- err("Build with ASSERTIONS=2 for more info.");
- abort(x);
-}
 function nullFunc_jdi(x) {
  err("Invalid function pointer called with signature 'jdi'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this)");
  err("Build with ASSERTIONS=2 for more info.");
@@ -14731,11 +14691,6 @@ function nullFunc_jijii(x) {
 }
 function nullFunc_jijiii(x) {
  err("Invalid function pointer called with signature 'jijiii'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this)");
- err("Build with ASSERTIONS=2 for more info.");
- abort(x);
-}
-function nullFunc_jijj(x) {
- err("Invalid function pointer called with signature 'jijj'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this)");
  err("Build with ASSERTIONS=2 for more info.");
  abort(x);
 }
@@ -15359,8 +15314,8 @@ function nullFunc_vjji(x) {
  err("Build with ASSERTIONS=2 for more info.");
  abort(x);
 }
-Module["wasmTableSize"] = 69699;
-Module["wasmMaxTableSize"] = 69699;
+Module["wasmTableSize"] = 69539;
+Module["wasmMaxTableSize"] = 69539;
 function invoke_dd(index, a1) {
  var sp = stackSave();
  try {
@@ -16621,16 +16576,6 @@ function invoke_ijji(index, a1, a2, a3, a4, a5) {
   Module["setThrew"](1, 0);
  }
 }
-function invoke_j(index) {
- var sp = stackSave();
- try {
-  return Module["dynCall_j"](index);
- } catch (e) {
-  stackRestore(sp);
-  if (typeof e !== "number" && e !== "longjmp") throw e;
-  Module["setThrew"](1, 0);
- }
-}
 function invoke_jdi(index, a1, a2) {
  var sp = stackSave();
  try {
@@ -16785,16 +16730,6 @@ function invoke_jijiii(index, a1, a2, a3, a4, a5, a6) {
  var sp = stackSave();
  try {
   return Module["dynCall_jijiii"](index, a1, a2, a3, a4, a5, a6);
- } catch (e) {
-  stackRestore(sp);
-  if (typeof e !== "number" && e !== "longjmp") throw e;
-  Module["setThrew"](1, 0);
- }
-}
-function invoke_jijj(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  return Module["dynCall_jijj"](index, a1, a2, a3, a4, a5);
  } catch (e) {
   stackRestore(sp);
   if (typeof e !== "number" && e !== "longjmp") throw e;
@@ -18175,7 +18110,6 @@ Module.asmLibraryArg = {
  "nullFunc_ijiiiii": nullFunc_ijiiiii,
  "nullFunc_ijj": nullFunc_ijj,
  "nullFunc_ijji": nullFunc_ijji,
- "nullFunc_j": nullFunc_j,
  "nullFunc_jdi": nullFunc_jdi,
  "nullFunc_jdii": nullFunc_jdii,
  "nullFunc_jfi": nullFunc_jfi,
@@ -18192,7 +18126,6 @@ Module.asmLibraryArg = {
  "nullFunc_jiji": nullFunc_jiji,
  "nullFunc_jijii": nullFunc_jijii,
  "nullFunc_jijiii": nullFunc_jijiii,
- "nullFunc_jijj": nullFunc_jijj,
  "nullFunc_jijji": nullFunc_jijji,
  "nullFunc_jji": nullFunc_jji,
  "nullFunc_v": nullFunc_v,
@@ -18443,7 +18376,6 @@ Module.asmLibraryArg = {
  "invoke_ijiiiii": invoke_ijiiiii,
  "invoke_ijj": invoke_ijj,
  "invoke_ijji": invoke_ijji,
- "invoke_j": invoke_j,
  "invoke_jdi": invoke_jdi,
  "invoke_jdii": invoke_jdii,
  "invoke_jfi": invoke_jfi,
@@ -18460,7 +18392,6 @@ Module.asmLibraryArg = {
  "invoke_jiji": invoke_jiji,
  "invoke_jijii": invoke_jijii,
  "invoke_jijiii": invoke_jijiii,
- "invoke_jijj": invoke_jijj,
  "invoke_jijji": invoke_jijji,
  "invoke_jji": invoke_jji,
  "invoke_v": invoke_v,
@@ -18624,19 +18555,12 @@ Module.asmLibraryArg = {
  "_JS_SystemInfo_HasWebGL": _JS_SystemInfo_HasWebGL,
  "_JS_SystemInfo_IsMobile": _JS_SystemInfo_IsMobile,
  "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv,
- "___assert_fail": ___assert_fail,
  "___atomic_fetch_add_8": ___atomic_fetch_add_8,
  "___buildEnvironment": ___buildEnvironment,
  "___cxa_allocate_exception": ___cxa_allocate_exception,
  "___cxa_begin_catch": ___cxa_begin_catch,
- "___cxa_end_catch": ___cxa_end_catch,
  "___cxa_find_matching_catch": ___cxa_find_matching_catch,
- "___cxa_find_matching_catch_2": ___cxa_find_matching_catch_2,
- "___cxa_find_matching_catch_3": ___cxa_find_matching_catch_3,
- "___cxa_find_matching_catch_4": ___cxa_find_matching_catch_4,
- "___cxa_free_exception": ___cxa_free_exception,
  "___cxa_pure_virtual": ___cxa_pure_virtual,
- "___cxa_rethrow": ___cxa_rethrow,
  "___cxa_throw": ___cxa_throw,
  "___gxx_personality_v0": ___gxx_personality_v0,
  "___lock": ___lock,
@@ -18936,7 +18860,6 @@ Module.asmLibraryArg = {
  "_llvm_copysign_f64": _llvm_copysign_f64,
  "_llvm_cos_f32": _llvm_cos_f32,
  "_llvm_cttz_i32": _llvm_cttz_i32,
- "_llvm_eh_typeid_for": _llvm_eh_typeid_for,
  "_llvm_exp2_f32": _llvm_exp2_f32,
  "_llvm_fabs_f32": _llvm_fabs_f32,
  "_llvm_fabs_f64": _llvm_fabs_f64,
@@ -25458,11 +25381,6 @@ var dynCall_ijji = Module["dynCall_ijji"] = (function() {
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_ijji"].apply(null, arguments);
 });
-var dynCall_j = Module["dynCall_j"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_j"].apply(null, arguments);
-});
 var dynCall_jdi = Module["dynCall_jdi"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
@@ -25542,11 +25460,6 @@ var dynCall_jijiii = Module["dynCall_jijiii"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_jijiii"].apply(null, arguments);
-});
-var dynCall_jijj = Module["dynCall_jijj"] = (function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_jijj"].apply(null, arguments);
 });
 var dynCall_jijji = Module["dynCall_jijji"] = (function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
