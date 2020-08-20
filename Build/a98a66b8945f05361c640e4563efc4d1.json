@@ -1,0 +1,16 @@
+{
+"companyName": "TRF",
+"productName": "Attack Of The Virus",
+"productVersion": "0.1",
+"dataUrl": "1d44c7cea902e07e1140818b7d34d5ab.unityweb",
+"wasmCodeUrl": "aefa03402a93f478f4e90d197fc21513.unityweb",
+"wasmFrameworkUrl": "ec9023d0e09c52820c13e14718eafd61.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Light",
+"backgroundColor": "#828080",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.8f1"
+}
